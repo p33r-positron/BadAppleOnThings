@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 const imageFolder = typeof process.argv[2] == "undefined" ? "../images/" : process.argv[2]; //Image folder is either command line argument either ../images/
 const musicFile = typeof process.argv[3] == "undefined" ? "../music.mp3" : process.argv[3]; //Music location is either command line argument either ../music.mp3
 
@@ -21,7 +22,7 @@ function read()
 {
 	let n = i++;
 	if(n>=limit)
-		return exit(0);
+		return process.exit(0);
 	process.stdout.write('\033c'); //Clear Screen
 	fs.readFile(path.join(imageFolder, "BA".concat(n.toString().concat(".txt"))), "utf-8", function(err, data)
 	{
@@ -35,8 +36,8 @@ function read()
 
 function main()
 {
-	setInterval(read, 1000/fps);
 	music();
+	setInterval(read, 1000/fps);
 };
 
 main();
