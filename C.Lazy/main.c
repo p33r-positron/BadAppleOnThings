@@ -38,8 +38,13 @@
 
 void music(char* musicFile)
 {
-	char cmd[strlen(musicFile)+9];
-	sprintf(cmd, "mpg123 %s &", musicFile);
+	#ifdef defined(_WIN32) || defined(WIN32)
+		char cmd[strlen(musicFile)+16];
+		sprintf(cmd, "start /B mpg123 %s", musicFile);
+	#else
+		char cmd[strlen(musicFile)+9];
+		sprintf(cmd, "mpg123 %s &", musicFile);
+	#endif
 	system(cmd);
 }
 
@@ -93,8 +98,13 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		strcpy(musicFile, "../music.mp3");
-		strcpy(imageFolder, "../images/");
+		#ifdef defined(_WIN32) || defined(WIN32)
+			strcpy(musicFile, "..\\music.mp3");
+			strcpy(imageFolder, "..\\images\\");
+		#else
+			strcpy(musicFile, "../music.mp3");
+			strcpy(imageFolder, "../images/");
+		#endif
 	}
 
 	music(musicFile);
@@ -119,12 +129,12 @@ int main(int argc, char** argv)
 		switch(r)
 		{
 			case 1:
-				printf("[BADAPPLE] Error reading file %d.txt\n", i);
+				printf("[BADAPPLE] Error reading file %d.txt\r\n", i);
 				return 1;
 				break;
 
 			case 2:
-				puts("[BADAPPLE] END\n");
+				puts("[BADAPPLE] END\r\n");
 				return 0;
 				break;
 		};
